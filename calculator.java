@@ -1,6 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
 package com.mycompany.calculator;
 
 import javax.swing.*;
@@ -8,9 +5,12 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Calculator implements ActionListener {
-    JFrame frame;
+    
+    JFrame frame ;
     JTextField textfield;
-    JButton numB[] = new JButton[9];
+    
+    
+    JButton numB[] = new JButton[10];
     JButton funB[] = new JButton[11];
     JButton add, sub, mul , dev, fact, sqr;
     JButton dec, equ, del, clr, neg;
@@ -19,26 +19,27 @@ public class Calculator implements ActionListener {
     double num1 = 0,num2 = 0, result = 0;
     char operator;
     Calculator(){
-        frame = new JFrame("Calculator");
-        frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500,500);
-        frame.setLayout(null);
-        textfield = new JTextField();
-        textfield.setBounds(50,25,400,50);
-        textfield.setFont(myFont);
-        textfield.setEditable(false);
+         frame = new JFrame("Calculator");
+         frame.setResizable(false);
+        
+         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+         frame.setSize(500,500);
+         frame.setLayout(null);
+         textfield = new JTextField();
+         textfield.setBounds(50,25,300,50);
+         textfield.setFont(myFont);
+         textfield.setEditable(false);
         
         add = new JButton("+");
         sub = new JButton("-");
         mul = new JButton("*");
         dev = new JButton("/");
         fact = new JButton("!");
-        sqr = new JButton("sqr");
+        sqr = new JButton("^");
         dec = new JButton(".");
         equ = new JButton("=");
-        del = new JButton("del");
-        clr = new JButton("clr");
+        del = new JButton("c");
+        clr = new JButton("d");
         neg = new JButton("(-)");
         
         funB[0] = add;
@@ -53,26 +54,24 @@ public class Calculator implements ActionListener {
         funB[9] = clr;
         funB[10] = neg;
         
-        for(int i=0;i<9;i++){
+        for(int i=0;i<11;i++){
             funB[i].addActionListener(this);
             funB[i].setFont(myFont);
             funB[i].setFocusable(false);
         }
-        for(int i=0;i<11;i++){
+        for(int i=0;i<10;i++){
             numB[i] = new JButton(String.valueOf(i));
             numB[i].addActionListener(this);
             numB[i].setFont(myFont);
             numB[i].setFocusable(false);
          }
         
-        neg.setBounds(50,430,70,50);
-        del.setBounds(150,430,70,50);
-        clr.setBounds(250,430,70,50);
-        dec.setBounds(350,430,70,50);
+        
+        equ.setBounds(350,25,70,50);
         
         panel = new JPanel();
         panel.setBounds(50,100,300,300);
-        panel.setLayouts(new GridLayout(4,4,10,10));
+        panel.setLayout(new GridLayout(5,5,10,10));
         
         panel.add(numB[1]);
         panel.add(numB[2]);
@@ -89,12 +88,16 @@ public class Calculator implements ActionListener {
         panel.add(sqr);
         panel.add(numB[0]);
         panel.add(fact);
-        panel.add(equ);
+        panel.add(dev);
+        panel.add(neg);
+        panel.add(dec);
+        
+        panel.add(clr);
+        panel.add(del);
+        
         
         frame.add(panel);
-        frame.add(neg);
-        frame.add(del);
-        frame.add(clr);
+        frame.add(equ);
         frame.add(textfield);
         frame.setVisible(true);
     }
@@ -109,8 +112,8 @@ public class Calculator implements ActionListener {
     }
     
      @Override   
-    public void actionPerform(ActionEvent e){
-        for(int i=0;i<11;i++){
+    public void actionPerformed(ActionEvent e){
+        for(int i=0;i<10;i++){
             if(e.getSource()==numB[i]){
                 textfield.setText(textfield.getText().concat(String.valueOf(i)));
                 
@@ -120,31 +123,31 @@ public class Calculator implements ActionListener {
                 textfield.setText(textfield.getText().concat("."));
             }
             if(e.getSource()==fact){
-                textfield.setText(textfield.getText().concat("!"));
+                num1 = Double.parseDouble(textfield.getText());
                 operator = '!';
                 
             }
             if(e.getSource()== sqr){
-                textfield.setText(textfield.getText().concat(" square"));
+                num1 = Double.parseDouble(textfield.getText());
                 operator = '^';
             }
             if(e.getSource()== add){
-                textfield.setText(textfield.getText());
+                num1 = Double.parseDouble(textfield.getText());
                 operator = '+';
                 textfield.setText("");
             }
             if(e.getSource()== sub){
-                textfield.setText(textfield.getText());
+                num1 = Double.parseDouble(textfield.getText());
                 operator = '-';
                 textfield.setText("");
             }
             if(e.getSource()== mul){
-                textfield.setText(textfield.getText());
+                num1 = Double.parseDouble(textfield.getText());
                 operator = '*';
                 textfield.setText("");
             }
             if(e.getSource()== dev){
-                textfield.setText(textfield.getText());
+                num1 = Double.parseDouble(textfield.getText());
                 operator = '/';
                 textfield.setText("");
             }
@@ -152,23 +155,23 @@ public class Calculator implements ActionListener {
                num2 = Double.parseDouble(textfield.getText());
                
                switch(operator){
-                   case'+': 
-                       result = num1+num2;
+               case'+' : 
+                       result=num1+num2;
                        break;
-                   case'-':
-                       result = num1-num2;
+               case'-' :
+                       result=num1-num2;
                        break;
-                   case'*':
-                       result = num1*num2;
+               case'*' :
+                       result=num1*num2;
                        break;
-                   case'/':
-                       result = num1/num2;
+               case'/' :
+                       result=num1/num2;
                        break;
-                   case'!':
-                       result = factorial(num1);
+               case'!' :
+                       result=factorial(num1);
                        break;
-                   case'^':
-                       result = num1*num1;
+               case'^' :
+                       result=num1*num1;
                        break;
                }
                textfield.setText(String.valueOf(result));
@@ -191,7 +194,3 @@ public class Calculator implements ActionListener {
             }
         }
     }
-
-
-
- 
