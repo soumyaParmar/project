@@ -10,8 +10,8 @@ import java.awt.event.*;
 public class Calculator implements ActionListener {
     JFrame frame;
     JTextField textfield;
-    JButton numB[] = new JButtons[9];
-    JButton funB[] = new JButtons[11];
+    JButton numB[] = new JButton[9];
+    JButton funB[] = new JButton[11];
     JButton add, sub, mul , dev, fact, sqr;
     JButton dec, equ, del, clr, neg;
     JPanel panel;
@@ -107,7 +107,8 @@ public class Calculator implements ActionListener {
         if(n<1) return 1;
         return n * factorial(n-1);
     }
-        
+    
+     @Override   
     public void actionPerform(ActionEvent e){
         for(int i=0;i<11;i++){
             if(e.getSource()==numB[i]){
@@ -184,7 +185,7 @@ public class Calculator implements ActionListener {
                 }
             }
             if(e.getSource()==neg){
-                double temp = double.parseDouble(textfield.getText());
+                double temp = Double.parseDouble(textfield.getText());
                 temp *= -1;
                 textfield.setText(String.valueOf(temp));
             }
